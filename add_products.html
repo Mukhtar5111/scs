@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../scs/assets/css/styles.css">
+    <style>
+        /* Styles for the close button */
+        #close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        #product-form {
+            position: relative; /* Required for absolute positioning of the close button */
+        }
+    </style>
+    <title>Add / Update Product</title>
+</head>
+<body>
+    <main>
+        <h2>Add Products</h2>
+
+        <div id="product-form">
+            <button id="close-button" onclick="closeForm()">X</button>
+            <h3>Add / Update Product</h3>
+            <form id="add-update-product-form" onsubmit="addOrUpdateProduct(event)">
+                <label for="product-name">Product Name:</label>
+                <input type="text" id="product-name" required>
+
+                <label for="product-quantity">Quantity:</label>
+                <input type="number" id="product-quantity" required>
+
+                <label for="product-cost">Cost (₦):</label>
+                <input type="number" id="product-cost" step="0.01" required>
+
+                <label for="product-price">Price (₦):</label>
+                <input type="number" id="product-price" step="0.01" required>
+
+                <label for="low-stock-quantity">Low Stock Quantity Alert:</label>
+                <input type="number" id="low-stock-quantity" required>
+
+                <button type="submit" id="add-update-product-btn">Add/Update Product</button>
+            </form>
+        </div>
+    </main>
+    <script>
+        // Function to retrieve products from local storage
+        function getProducts() {
+            return JSON.parse(localStorage.getItem('products')) || [];
+        }
+
+        // Function to save products to local storage
+        function saveProducts(products) {
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+
+        // Function to close the form and return to products.html
+        function closeForm() {
+            window.location.href = 'products.html'; // Redirect to products.html
+        }
+
+        // Function to add or update a product
+        function addOrUpdateProduct(event) {
+            event.preventDefault();
+            const products = getProducts();
+            const productName = document.getElementById('product-name').value.trim();
+            const productQuantity = parseInt(document.getElementById('product-quantity').value);
+            const productCost = parseFloat(document.getElementById('product-cost').value);
+            const productPrice = parseFloat(document.getElementById('product-price').value);
+            const lowStockQuantity = parseInt(document.getElementById('low-stock-quantity').value);
+
+            // Check if the product already exists
+            const existingProductIndex = products.findIndex(product => product.name.toLowerCase() === productName.toLowerCase());
+
+            if (existingProductIndex !== -1) {
+                // Update existing product
+                products[existingProductIndex] = {
+                    name: productName,
+                    quantity: productQuantity,
+                    cost: productCost,
+                    price: productPrice,
+                    lowStockAlert: lowStockQuantity
+                };
+            } else {
+                // Add new product
+                products.push({
+                    name: productName,
+                    quantity: productQuantity,
+                    cost: productCost,
+                    price: productPrice,
+                    lowStockAlert: lowStockQuantity
+                });
+            }
+
+            // Save products back to local storage
+            saveProducts(products);
+
+            // Clear input fields after submission
+            document.getElementById('add-update-product-form').reset();
+        }
+    </script>
+</body>
+</html>

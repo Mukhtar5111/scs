@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Stock Management</title>
+    <link rel="stylesheet" href="../scs/assets/css/styles.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form id="register-form" onsubmit="return handleRegister(event)">
+            <label for="username">Username</label>
+            <input type="text" id="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+            
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" required>
+            
+            <button type="submit">Register</button>
+            <p>Already have an account? <a href="../scs/login.html">Login here</a></p>
+        </form>
+    </div>
+    <script src="../scs/assets/js/script.js"></script>
+</body>
+</html>

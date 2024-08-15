@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Stock Management</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="assets/js/script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <nav>
+            <a href="index.html">Dashboard</a>
+            <a href="stock-in.html">Stock In</a>
+            <a href="stock-out.html">Stock Out</a>
+            <a href="products.html">Products</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="dashboard-summary">
+            <div class="widget">
+                <h3>Total Sales</h3>
+                <p id="total-sales">₦0.00</p>
+            </div>
+            <div class="widget">
+                <h3>Total Purchases</h3>
+                <p id="total-purchases">₦0.00</p>
+            </div>
+            <div class="widget">
+                <h3>Gross Profit</h3>
+                <p id="gross-profit">₦0.00</p>
+            </div>
+            <div class="widget">
+                <h3>Current Stock Value</h3>
+                <p id="stock-value">₦0.00</p>
+            </div>
+        </section>
+
+        <section class="transactions-filter">
+            <h2>Filter Transactions</h2>
+            <form id="transaction-filter-form">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date" onchange="filterTransactions()">
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date" onchange="filterTransactions()">
+
+                <div class="transaction-type">
+                    <input type="radio" id="all-transactions" name="transaction-type" value="all" checked onchange="filterTransactions()">
+                    <label for="all-transactions">All</label>
+                    <input type="radio" id="stock-in" name="transaction-type" value="in" onchange="filterTransactions()">
+                    <label for="stock-in">Stock In</label>
+                    <input type="radio" id="stock-out" name="transaction-type" value="out" onchange="filterTransactions()">
+                    <label for="stock-out">Stock Out</label>
+                </div>
+            </form>
+        </section>
+
+        <section class="current-stock">
+            <h2>Current Stock</h2>
+            <div id="search-bar">
+                <input type="text" id="search-input" placeholder="Search products..." oninput="searchProducts()">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Cost (₦)</th>
+                        <th>Price (₦)</th>
+                    </tr>
+                </thead>
+                <tbody id="products-table-body">
+                    <!-- Products will be dynamically added here -->
+                </tbody>
+            </table>
+            <button onclick="printStock()">Print Stock</button>
+        </section>
+
+        <section class="transactions-table">
+            <h2>Transactions</h2>
+            <table id="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Serial Number</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Rate (₦)</th>
+                        <th>Amount (₦)</th>
+                        <th>Date</th>
+                        <th>Transaction Type</th>
+                    </tr>
+                </thead>
+                <tbody id="transactions-table-body">
+                    <!-- Transactions will be dynamically loaded here -->
+                </tbody>
+            </table>
+            <button onclick="printTransactions()">Print Transactions</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Stock Management System</p>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
